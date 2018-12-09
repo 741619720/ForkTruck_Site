@@ -19,5 +19,5 @@ def Task(request):
     task_list = models.RentTaskInfo.objects.all()
     return render(request, "member-list.html", {"data": task_list})
 
-def TaskAdd(request):
-    return render(request, "task-add.html")
+def AddTask(request):
+    return render(request, "member-add.html")

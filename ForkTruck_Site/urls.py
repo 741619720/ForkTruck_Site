@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', views.Login),
     path('task/', views.Task),
+    path('task/member-add.html', views.AddTask)
 ]
