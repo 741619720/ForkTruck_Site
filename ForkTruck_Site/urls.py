@@ -20,6 +20,7 @@ from mysite import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', views.Login),
-    path('task/', views.Task),
-    path('task/member-add.html', views.AddTask)
+    path('login/article-list.html', views.Task),
+    path('login/article-add.html', views.AddTask)
+
 ]

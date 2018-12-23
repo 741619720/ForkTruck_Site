@@ -10,14 +10,14 @@
 <link rel="Bookmark" href="favicon.ico" >
 <link rel="Shortcut Icon" href="favicon.ico" />
 <!--[if lt IE 9]>
-<script type="text/javascript" src="lib/html5.js"></script>
-<script type="text/javascript" src="lib/respond.min.js"></script>
+<script type="text/javascript" src="/templates/lib/html5.js"></script>
+<script type="text/javascript" src="/templates/lib/respond.min.js"></script>
 <![endif]-->
-<link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
-<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
-<link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
-<link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
-<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
+<link rel="stylesheet" type="text/css" href="/templates/static/h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="/templates/static/h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="/templates/lib/Hui-iconfont/1.0.8/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="/templates/static/h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="/templates/static/h-ui.admin/css/style.css" />
 <!--[if IE 6]>
 <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script><![endif]-->
@@ -296,19 +296,30 @@
 					<thead>
 						<tr class="text-c">
 							<th width="25"><input type="checkbox" name="" value=""></th>
-							<th width="80">ID</th>
-							<th>标题</th>
-							<th width="80">分类</th>
-							<th width="80">来源</th>
-							<th width="120">更新时间</th>
-							<th width="75">浏览次数</th>
-							<th width="60">发布状态</th>
-							<th width="120">操作</th>
+							<th width="80">任务号</th>
+                            <th width="80">车辆号</th>
+                            <th width="80">用户名</th>
+                            <th width="80">电话</th>
+                            <th width="80">起租日期</th>
+                            <th width="80">归还日期</th>
+                            <th width="80">实际使用天数</th>
+							<th width="80">租价</th>
+							<th width="80">运费</th>
+							<th width="80">总费用</th>
+							<th width="80">押金记录</th>
+							<th width="80">供方支出</th>
+							<th width="80">附件</th>
+							<th width="160">备注</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr class="text-c">
 							<td><input type="checkbox" value="" name=""></td>
+                            {% for line in data %}
+                                <tr>
+                                    <td>{{ line.taskID }}</td>
+                                <tr>
+                            {% endfor %}
 							<td>10001</td>
 							<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="article_edit('查看','article-zhang.html','10001')" title="查看">资讯标题</u></td>
 							<td>行业动态</td>
@@ -341,16 +352,16 @@
 </section>
 
 <!--_footer 作为公共模版分离出去-->
-<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
-<script type="text/javascript" src="static/h-ui/js/H-ui.js"></script>
-<script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.page.js"></script>
+<script type="text/javascript" src="/templates/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/templates/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="/templates/static/h-ui/js/H-ui.js"></script>
+<script type="text/javascript" src="/templates/static/h-ui.admin/js/H-ui.admin.page.js"></script>
 <!--/_footer /作为公共模版分离出去-->
 
 <!--请在下方写此页面业务相关的脚本-->
-<script type="text/javascript" src="lib/My97DatePicker/4.8/WdatePicker.js"></script>
-<script type="text/javascript" src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript" src="/templates/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/templates/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/templates/lib/laypage/1.2/laypage.js"></script>
 <script type="text/javascript">
 $('.table-sort').dataTable({
 	"aaSorting": [[ 1, "desc" ]],//默认第几个排序

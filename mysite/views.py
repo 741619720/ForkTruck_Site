@@ -1,23 +1,60 @@
 from django.shortcuts import render
 from django.shortcuts import HttpResponse
 from mysite import  models
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
 
 # Create your views here.
 
 def Login(request):
-    print("=========================")
-    if request.method == "POST":
-        username = request.POST.get("username", None)
-        password = request.POST.get("password", None)
-        print(username, password)
-    return render(request, "login.html",)
+    if request.method == 'GET':
+        return render(request, 'login.html')
+
+    username = request.POST['username']
+    password = request.POST['password']
+    #User.objects.create_user(username=username, password=password)
+    user = authenticate(username=username, password=password)
+    print(user)
+    if user is not None:
+        if user.is_active:
+            login(request, user)
+            # Redirect to a success page.
+            return render(request, 'article-list.html')
+            # return reverse('index')
+        else:
+            return render(request, 'login.html', {'errmsg': 'disabled account'})
+            # Return a 'disabled account' error message
+    else:
+        return render(request, 'login.html', {'errmsg': 'invalid login'})
+
 
 def Task(request):
-    if request.method == "POST":
-        taskID = request.POST.get("taskID", None)
-
     task_list = models.RentTaskInfo.objects.all()
-    return render(request, "member-list.html", {"data": task_list})
+    print("task_list:", task_list)
+    return render(request, "article-list.html", {"data": task_list})
 
 def AddTask(request):
-    return render(request, "member-add.html")
+    if request.method == "POST":
+        taskID = request.POST.get("taskID", None)
+        forktruckID = request.POST.get("forktruckID", None)
+        userName = request.POST.get("userName", None)
+        userPhone = request.POST.get("userPhone", None)
+        rent_startDate = request.POST.get("rent_startDate", None)
+        rent_endDate = request.POST.get("rent_endDate", None)
+        rent_usedDay = request.POST.get("rent_usedDay", None)
+        rent_dayPrice = request.POST.get("rent_dayPrice", None)
+        rent_transportPrice = request.POST.get("rent_transportPrice", None)
+        rent_totalPrice = request.POST.get("rent_totalPrice", None)
+        rent_securityPrice = request.POST.get("rent_securityPrice", None)
+        rent_selfCost = request.POST.get("rent_selfCost", None)
+        attachment = request.POST.get("attachment", None)
+        remark = request.POST.get("remark", None)
+
+        models.RentTaskInfo.objects.create(taskID=taskID, forktruckID=forktruckID, userName=userName, userPhone=userPhone,
+                                           rent_startDate=rent_startDate,rent_endDate=rent_endDate, rent_usedDay=rent_usedDay,
+                                           rent_dayPrice=rent_dayPrice, rent_transportPrice=rent_transportPrice,
+                                           rent_totalPrice=rent_totalPrice, rent_securityPrice=rent_securityPrice,
+                                           rent_selfCost=rent_selfCost, attachment=attachment, remark=remark
+                                           )
+    return render(request, "article-add.html")
+
