@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="92f24568-0ac1-4aca-8532-f9a099c19b35" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/ForkTruck_Site/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/ForkTruck_Site/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/article-list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/article-list.html" afterDir="false" />
-    </list>
+    <list default="true" id="92f24568-0ac1-4aca-8532-f9a099c19b35" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -204,9 +199,9 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="91" />
-    <option name="y" value="37" />
+  <component name="ProjectFrameBounds" extendedState="1">
+    <option name="x" value="37" />
+    <option name="y" value="29" />
     <option name="width" value="1602" />
     <option name="height" value="1020" />
   </component>
@@ -312,7 +307,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="91" y="37" width="1602" height="1020" extended-state="0" />
+    <frame x="461" y="42" width="1602" height="1020" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.7497006" visible="true" weight="0.15823606" />
