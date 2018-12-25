@@ -3,6 +3,7 @@ from django.shortcuts import HttpResponse
 from mysite import  models
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
+import datetime
 
 # Create your views here.
 
@@ -19,7 +20,7 @@ def Login(request):
         if user.is_active:
             login(request, user)
             # Redirect to a success page.
-            return render(request, 'article-list.html')
+            return Task(request)
             # return reverse('index')
         else:
             return render(request, 'login.html', {'errmsg': 'disabled account'})
@@ -33,14 +34,24 @@ def Task(request):
     print("task_list:", task_list)
     return render(request, "article-list.html", {"data": task_list})
 
+
+def MyDateTimeSwitcher(postTime):
+    dateTime = postTime.split()
+    result = []
+    result.extend(dateTime[0].split("-"))
+    result.extend(dateTime[1].split(":"))
+    return result
+
 def AddTask(request):
     if request.method == "POST":
         taskID = request.POST.get("taskID", None)
         forktruckID = request.POST.get("forktruckID", None)
         userName = request.POST.get("userName", None)
         userPhone = request.POST.get("userPhone", None)
-        rent_startDate = request.POST.get("rent_startDate", None)
-        rent_endDate = request.POST.get("rent_endDate", None)
+        dateTime = MyDateTimeSwitcher(request.POST.get("rent_startDate", None))
+        rent_startDate = datetime.datetime(int(dateTime[0]), int(dateTime[1]), int(dateTime[2]), int(dateTime[3]), int(dateTime[4]), int(dateTime[5]))
+        dateTime = MyDateTimeSwitcher(request.POST.get("rent_endDate", None))
+        rent_endDate = datetime.datetime(int(dateTime[0]), int(dateTime[1]), int(dateTime[2]), int(dateTime[3]), int(dateTime[4]), int(dateTime[5]))
         rent_usedDay = request.POST.get("rent_usedDay", None)
         rent_dayPrice = request.POST.get("rent_dayPrice", None)
         rent_transportPrice = request.POST.get("rent_transportPrice", None)
@@ -50,11 +61,13 @@ def AddTask(request):
         attachment = request.POST.get("attachment", None)
         remark = request.POST.get("remark", None)
 
-        models.RentTaskInfo.objects.create(taskID=taskID, forktruckID=forktruckID, userName=userName, userPhone=userPhone,
-                                           rent_startDate=rent_startDate,rent_endDate=rent_endDate, rent_usedDay=rent_usedDay,
-                                           rent_dayPrice=rent_dayPrice, rent_transportPrice=rent_transportPrice,
-                                           rent_totalPrice=rent_totalPrice, rent_securityPrice=rent_securityPrice,
-                                           rent_selfCost=rent_selfCost, attachment=attachment, remark=remark
-                                           )
+        print("rent_startDate:", rent_startDate)
+        print("rent_endDate:", rent_endDate)
+
+        models.RentTaskInfo.objects.create(taskID=taskID, forktruckID=forktruckID, userName=userName, userPhone=userPhone, rent_startDate=rent_startDate,
+                                           rent_endDate=rent_endDate, rent_usedDay=rent_usedDay, rent_dayPrice=rent_dayPrice, rent_transportPrice=rent_transportPrice,
+                                           rent_totalPrice=rent_totalPrice, rent_securityPrice=rent_securityPrice, rent_selfCost=rent_selfCost, attachment=attachment,
+                                           remark=remark)
+
     return render(request, "article-add.html")
 
