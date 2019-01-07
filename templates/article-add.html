@@ -58,19 +58,19 @@
          <div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">起租日期：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}'})" id="datemin" class="input-text Wdate" name="rent_startDate">
+				<input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',startDate:'#F{\'%y-%M-%d\'}'})" id="startdate" class="input-text Wdate" name="rent_startDate" autocomplete="off">
 			</div>
 		</div>
         <div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">归还日期：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'datemin\')}'})" id="datemax" class="input-text Wdate" name="rent_endDate">
+				<input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startdate\')||\'%y-%M-%d\'}'})" id="datemin" class="input-text Wdate" name="rent_endDate" autocomplete="off">
 			</div>
 		</div>
         <div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>实际使用天数：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="" placeholder="" id="" name="rent_usedDay">
+				<input type="text" class="input-text" value="datemin - startdate" placeholder="" id="" name="rent_usedDay">
 			</div>
 		</div>
         <div class="row cl">
