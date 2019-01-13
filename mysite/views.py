@@ -48,17 +48,15 @@ def AddTask(request):
         forktruckID = request.POST.get("forktruckID", None)
         userName = request.POST.get("userName", None)
         userPhone = request.POST.get("userPhone", None)
-        dateTime = MyDateTimeSwitcher(request.POST.get("rent_startDate", None))
-        rent_startDate = datetime.datetime(int(dateTime[0]), int(dateTime[1]), int(dateTime[2]), int(dateTime[3]), int(dateTime[4]), int(dateTime[5]))
-        dateTime = MyDateTimeSwitcher(request.POST.get("rent_endDate", None))
-        rent_endDate = datetime.datetime(int(dateTime[0]), int(dateTime[1]), int(dateTime[2]), int(dateTime[3]), int(dateTime[4]), int(dateTime[5]))
+        rent_startDate = datetime.datetime.strptime(request.POST.get("rent_startDate", None), '%Y-%m-%d')
+        rent_endDate = datetime.datetime.strptime(request.POST.get("rent_endDate", None), '%Y-%m-%d')
         rent_usedDay = request.POST.get("rent_usedDay", None)
         rent_dayPrice = request.POST.get("rent_dayPrice", None)
         rent_transportPrice = request.POST.get("rent_transportPrice", None)
         rent_totalPrice = request.POST.get("rent_totalPrice", None)
         rent_securityPrice = request.POST.get("rent_securityPrice", None)
         rent_selfCost = request.POST.get("rent_selfCost", None)
-        attachment = request.POST.get("attachment", None)
+        attachment = request.FILES.get("attachment", None)
         remark = request.POST.get("remark", None)
 
         print("rent_startDate:", rent_startDate)
@@ -71,3 +69,8 @@ def AddTask(request):
 
     return render(request, "article-add.html")
 
+def Test(request):
+    if request.method == "POST":
+        attachment = request.FILES.get("img", None)
+        print("img:", request.FILES)
+    return render(request, "test.html")

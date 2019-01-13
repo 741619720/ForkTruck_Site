@@ -21,6 +21,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', views.Login),
     path('login/article-list.html', views.Task),
-    path('login/article-add.html', views.AddTask)
+    path('login/article-add.html', views.AddTask),
+    path('login/test', views.Test)
 
 ]
