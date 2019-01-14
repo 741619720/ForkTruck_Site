@@ -1,10 +1,10 @@
-
-</head>
-<body>
-<article class="page-container">
-	<form class="form form-horizontal" id="form-article-add" method="post">
-        <input type="file" name="img" />
-   <br />
-   <input type="submit" value="上传文件" />
-	</form>
-</article>
+<form enctype="multipart/form-data" method="POST">
+   <div class="row cl">
+       <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>附件：</label>
+       <div class="formControls col-xs-8 col-sm-9">
+           <input type="file" name="img" multiple/>
+           <br />
+           <input type="submit" value="上传文件" />
+       </div>
+   </div>
+</form>

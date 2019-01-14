@@ -72,5 +72,5 @@ def AddTask(request):
 def Test(request):
     if request.method == "POST":
         attachment = request.FILES.get("img", None)
-        print("img:", request.FILES)
+        print("attachment:", request.FILES)
     return render(request, "test.html")
