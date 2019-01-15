@@ -57,11 +57,12 @@ def AddTask(request):
         rent_securityPrice = request.POST.get("rent_securityPrice", None)
         rent_selfCost = request.POST.get("rent_selfCost", None)
         attachment = request.FILES.get("attachment", None)
+        attachment.
         remark = request.POST.get("remark", None)
 
         print("rent_startDate:", rent_startDate)
         print("rent_endDate:", rent_endDate)
-        print("attachment:", attachment)
+        print("attachment:", request.FILES)
         models.RentTaskInfo.objects.create(taskID=taskID, forktruckID=forktruckID, userName=userName, userPhone=userPhone, rent_startDate=rent_startDate,
                                            rent_endDate=rent_endDate, rent_usedDay=rent_usedDay, rent_dayPrice=rent_dayPrice, rent_transportPrice=rent_transportPrice,
                                            rent_totalPrice=rent_totalPrice, rent_securityPrice=rent_securityPrice, rent_selfCost=rent_selfCost, attachment=attachment,
