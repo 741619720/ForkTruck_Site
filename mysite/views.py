@@ -1,9 +1,12 @@
 from django.shortcuts import render
 from django.shortcuts import HttpResponse
-from mysite import  models
+from mysite import models
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 import datetime
+import os
+import hashlib
+import ForkTruck_Site.settings
 
 # Create your views here.
 
@@ -42,6 +45,29 @@ def MyDateTimeSwitcher(postTime):
     result.extend(dateTime[1].split(":"))
     return result
 
+def calc_md5(passwd):
+    md5 = hashlib.md5(datetime.datetime.now().encode('utf-8'))
+    md5.update(passwd.encode('utf-8'))
+    ret = md5.hexdigest()
+    return ret
+
+def RenameSaveFile(attachments, taskID):
+    i=0
+    for filename in attachments:
+        temp = os.path.split(filename.name)
+        if temp.__len__() < 2:
+            m1 = calc_md5(filename.name)
+        else:
+            m1 = calc_md5(filename.name) + os.path.splitext(temp[1])
+        name = os.path.join(taskID, m1)
+        destination = open(os.path.join(ForkTruck_Site.settings.MEDIA_ROOT, name), 'wb+')  # 打开特定的文件进行二进制的写操作
+        for chunk in filename.chunks():  # 分块写入文件
+            destination.write(chunk)
+        destination.close()
+        attachments[i] = name
+    i = i+1
+    return attachments
+
 def AddTask(request):
     if request.method == "POST":
         taskID = request.POST.get("taskID", None)
@@ -56,22 +82,29 @@ def AddTask(request):
         rent_totalPrice = request.POST.get("rent_totalPrice", None)
         rent_securityPrice = request.POST.get("rent_securityPrice", None)
         rent_selfCost = request.POST.get("rent_selfCost", None)
-        attachment = request.FILES.get("attachment", None)
-        attachment.
+        attachments = request.FILES.getlist("attachment", None)
         remark = request.POST.get("remark", None)
 
+        attachments = RenameSaveFile(attachments, taskID)
         print("rent_startDate:", rent_startDate)
         print("rent_endDate:", rent_endDate)
         print("attachment:", request.FILES)
         models.RentTaskInfo.objects.create(taskID=taskID, forktruckID=forktruckID, userName=userName, userPhone=userPhone, rent_startDate=rent_startDate,
                                            rent_endDate=rent_endDate, rent_usedDay=rent_usedDay, rent_dayPrice=rent_dayPrice, rent_transportPrice=rent_transportPrice,
-                                           rent_totalPrice=rent_totalPrice, rent_securityPrice=rent_securityPrice, rent_selfCost=rent_selfCost, attachment=attachment,
+                                           rent_totalPrice=rent_totalPrice, rent_securityPrice=rent_securityPrice, rent_selfCost=rent_selfCost, attachment=attachments,
                                            remark=remark)
 
     return render(request, "article-add.html")
 
+
+
+
+
 def Test(request):
     if request.method == "POST":
-        attachment = request.FILES.get("img", None)
-        print("attachment:", request.FILES)
+        attachments = request.FILES.getlist("img", None)
+        print("imgs:", request.FILES)
+        print("attachment:", request.FILES.getlist("img", None))
+        print("1111", datetime.datetime.now().encode('utf-8'))
+        #attachments = RenameSaveFile(attachments, 123)
     return render(request, "test.html")
