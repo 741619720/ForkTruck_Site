@@ -15,13 +15,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import url
 from mysite import views
+
+from django.views.static import serve
+from ForkTruck_Site.settings import MEDIA_ROOT
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', views.Login),
     path('login/article-list.html', views.Task),
     path('login/article-add.html', views.AddTask),
-    path('login/test', views.Test)
-
+    path('login/test', views.Test),
+    url(r'^img/$', views.img, name='img'),
+    url(r'^download/(?P<filename>.+)$', views.download, name='download'),
+    url(r'^login/download/(?P<filename>.+)$', views.download, name='download'),
 ]

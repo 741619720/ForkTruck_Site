@@ -1,14 +1,28 @@
 from django.shortcuts import render
-from django.shortcuts import HttpResponse
 from mysite import models
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 import datetime
 import os
-import hashlib
 import ForkTruck_Site.settings
+from django.views.decorators.http import require_GET, require_POST
+from django.http import HttpResponse
+from django.core.files import File
+from ForkTruck_Site.settings import MEDIA_ROOT as media
 
-# Create your views here.
+
+def img(request):
+    pass
+
+def download(request, filename):
+    file_pathname = os.path.join(media, filename)
+    with open(file_pathname, 'rb') as f:
+        file = File(f)
+        response = HttpResponse(file.chunks(), content_type='APPLICATION/OCTET-STREAM')
+        response['Content-Disposition'] = 'attachment; filename=' + filename
+        response['Content-Length'] = os.path.getsize(file_pathname)
+    return response
+    # Create your views here.
 
 def Login(request):
     if request.method == 'GET':
@@ -34,7 +48,7 @@ def Login(request):
 
 def Task(request):
     task_list = models.RentTaskInfo.objects.all()
-    print("task_list:", task_list)
+
     return render(request, "article-list.html", {"data": task_list})
 
 
@@ -59,7 +73,7 @@ def mkdir(path):
         os.makedirs(path)
 
 def RenameSaveFile(attachments, taskID):
-    files = []
+    files = ""
     for filename in attachments:
         pathname = os.path.join(ForkTruck_Site.settings.MEDIA_ROOT, taskID)
         mkdir(pathname)
@@ -68,8 +82,11 @@ def RenameSaveFile(attachments, taskID):
         for chunk in filename.chunks():  # 分块写入文件
             destination.write(chunk)
         destination.close()
-        files.append(filename.name+"/")
-    return files
+        files += (filename.name+"/")
+    print("files---:", files)
+    if files.__len__() < 1:
+        return ""
+    return files[:-1]
 
 def AddTask(request):
     if request.method == "POST":
@@ -106,10 +123,10 @@ def AddTask(request):
 
 def Test(request):
     task_list = models.Test.objects.all()
-    for item in task_list:
-        print(item.files.split("/"))
     if request.method == "POST":
         attachments = request.FILES.getlist("img", None)
+        print("attachments111:", attachments)
         attachments = RenameSaveFile(attachments, "task1234")
+        print("attachments:", attachments)
         models.Test.objects.create(files=attachments)
-    return render(request, "test.html")
+    return render(request, "test.html", {"images" : attachments})

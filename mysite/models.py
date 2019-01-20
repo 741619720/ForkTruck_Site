@@ -27,9 +27,12 @@ class RentTaskInfo(models.Model):
     rent_totalPrice = models.FloatField()                       #总费用
     rent_securityPrice = models.FloatField()                    #押金记录
     rent_selfCost = models.FloatField()                         #供方支出
-    attachment = models.FilePathField()                         #附件
+    attachment = models.CharField(max_length=1000)              #附件
     remark = models.CharField(max_length=200)                   #备注
+
+    def attachment_list(self):
+        return self.attachment.split("/")
 
 
 class Test(models.Model):
-    files = models.FilePathField()
+    files = models.CharField(max_length=1000)

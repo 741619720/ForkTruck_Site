@@ -330,7 +330,13 @@
                                     <td>{{ line.rent_totalPrice }}</td>
                                     <td>{{ line.rent_securityPrice }}</td>
                                     <td>{{ line.rent_selfCost }}</td>
-                                    <td>{{ line.attachment }}</td>
+                                    <td>
+                                        <ul>
+                                            {% for attach in line.attachment_list %}
+                                                <span class="c-blue"><li> <a href="download/{{line.taskID}}/{{attach}}">{{attach}}</a> </li></span>
+                                            {% endfor %}
+                                        </ul>
+                                    </td>
                                     <td>{{ line.remark }}</td>
                                 <tr>
                             {% endfor %}
