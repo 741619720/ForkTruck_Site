@@ -36,3 +36,4 @@ class RentTaskInfo(models.Model):
 
 class Test(models.Model):
     files = models.CharField(max_length=1000)
+    day = models.DateTimeField()

@@ -170,5 +170,5 @@ def Test(request):
         print("attachments111:", attachments)
         attachments = RenameSaveFile(attachments, "task1234")
         print("attachments:", attachments)
-        models.Test.objects.create(files=attachments)
-    return render(request, "test.html", {"images" : attachments})
+        models.Test.objects.create(files=attachments,day="2019-01-10")
+    return render(request, "test.html")
