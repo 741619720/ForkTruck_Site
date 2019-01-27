@@ -85,8 +85,48 @@ def RenameSaveFile(attachments, taskID):
         files += (filename.name+"/")
     print("files---:", files)
     if files.__len__() < 1:
-        return ""
+        return None
     return files[:-1]
+
+def EditTask(request, taskID):
+    if request.method == "POST":
+        task = models.RentTaskInfo.objects.get(taskID=taskID)
+        if task == None:
+            return None
+        else:
+            task.forktruckID = request.POST.get("forktruckID", None)
+            task.userName = request.POST.get("userName", None)
+            task.userPhone = request.POST.get("userPhone", None)
+            task.rent_startDate = datetime.datetime.strptime(request.POST.get("rent_startDate", None), '%Y-%m-%d')
+            task.rent_endDate = datetime.datetime.strptime(request.POST.get("rent_endDate", None), '%Y-%m-%d')
+            task.rent_usedDay = request.POST.get("rent_usedDay", None)
+            task.rent_dayPrice = request.POST.get("rent_dayPrice", None)
+            task.rent_transportPrice = request.POST.get("rent_transportPrice", None)
+            task.rent_totalPrice = request.POST.get("rent_totalPrice", None)
+            task.rent_securityPrice = request.POST.get("rent_securityPrice", None)
+            task.rent_selfCost = request.POST.get("rent_selfCost", None)
+            attachments = request.FILES.getlist("attachment", None)
+            task.attachments = RenameSaveFile(attachments, task.taskID)
+            task.remark = request.POST.get("remark", None)
+            task.save()
+
+            task_list = models.RentTaskInfo.objects.all()
+            return render(request, "article-list.html", {"data": task_list})
+    else:
+        task = models.RentTaskInfo.objects.get(taskID=taskID)
+        if task == None:
+            return render(request, "article-edit.html")
+        else:
+            return render(request, "article-edit.html", {"data": task})
+
+def DeleteTask(request, taskID):
+    del_task = models.RentTaskInfo.objects.filter(taskID=taskID)
+    if del_task:
+        del_task.delete()
+    task_list = models.RentTaskInfo.objects.all()
+    return render(request, "article-list.html", {"data": task_list})
+
+
 
 def AddTask(request):
     if request.method == "POST":
@@ -94,8 +134,8 @@ def AddTask(request):
         forktruckID = request.POST.get("forktruckID", None)
         userName = request.POST.get("userName", None)
         userPhone = request.POST.get("userPhone", None)
-        rent_startDate = datetime.datetime.strptime(request.POST.get("rent_startDate", None), '%Y-%m-%d')
-        rent_endDate = datetime.datetime.strptime(request.POST.get("rent_endDate", None), '%Y-%m-%d')
+        rent_startDate = request.POST.get("rent_startDate", None)
+        rent_endDate = request.POST.get("rent_endDate", None)
         rent_usedDay = request.POST.get("rent_usedDay", None)
         rent_dayPrice = request.POST.get("rent_dayPrice", None)
         rent_transportPrice = request.POST.get("rent_transportPrice", None)
@@ -115,6 +155,8 @@ def AddTask(request):
                                            rent_totalPrice=rent_totalPrice, rent_securityPrice=rent_securityPrice,
                                            rent_selfCost=rent_selfCost, attachment=attachments, remark=remark)
 
+        task_list = models.RentTaskInfo.objects.all()
+        return render(request, "article-list.html", {"data": task_list})
     return render(request, "article-add.html")
 
 
